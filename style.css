@@ -48,6 +48,11 @@ a:hover {
   color: var(--accent-hover);
 }
 
+strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -59,12 +64,14 @@ a:hover {
    HEADER
    ============================================ */
 .site-header {
-  max-width: var(--max-width);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 1rem;
+  padding: 1.75rem 2rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .logo {
@@ -124,7 +131,9 @@ main {
 }
 
 /* ============================================
-   HERO + fade-up animation
+   HERO — full-width with BIG photo + gradient bg
+   The gradient background grounds the large photo so it
+   feels intentional rather than overwhelming.
    ============================================ */
 @keyframes fade-up {
   from {
@@ -137,8 +146,47 @@ main {
   }
 }
 
-.hero {
-  padding: 4rem 0 3rem;
+.hero-with-photo {
+  position: relative;
+  width: 100%;
+  /* Soft green-tinted gradient — the magic ingredient */
+  background:
+    radial-gradient(ellipse at top right, rgba(74, 93, 58, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--accent-soft) 0%, transparent 100%);
+
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2rem;
+  align-items: center;
+  overflow: hidden; /* keep gradient corners clean */
+}
+
+@media (min-width: 768px) {
+  .hero-with-photo {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4rem;
+    padding: 4rem 2rem 5rem;
+    min-height: 80vh;
+  }
+}
+
+/* Inner content wrapper — keeps text + photo at a sensible max width */
+.hero-text,
+.hero-photo {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 0;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-greeting,
@@ -150,77 +198,42 @@ main {
 
 .hero-greeting {
   color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
   animation-delay: 0.1s;
 }
 
 .hero h1 {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
   letter-spacing: -0.5px;
   animation-delay: 0.25s;
 }
 
 .hero .tagline {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.55;
   animation-delay: 0.4s;
 }
 
-/* ============================================
-   HERO WITH PHOTO — full-width, photo dominates right
-   The hero sits OUTSIDE <main>, so it can use the full
-   viewport width. Text is constrained on the left, photo
-   sprawls across the right.
-   ============================================ */
-
-.hero-with-photo {
-  width: 100%;
-  max-width: 1400px;          /* cap on ultra-wide monitors so it doesn't get silly */
-  margin: 0 auto;
-  padding: 4rem 1.5rem 3rem;
-
-  display: flex;
-  flex-direction: column-reverse;   /* mobile: photo above, text below */
-  gap: 2rem;
-  align-items: center;
-}
-
-/* On tablets and up: text left, big photo right */
-@media (min-width: 768px) {
-  .hero-with-photo {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
-    padding: 5rem 2.5rem 4rem;
-    min-height: 80vh;              /* hero feels full-height-ish on landing */
-  }
-}
-
-.hero-text {
-  flex: 1;
-  min-width: 0;
-  max-width: 520px;                /* keep the text comfortably readable */
-}
-
 .hero-photo {
-  /* Mobile: large but contained */
   width: 280px;
   flex-shrink: 0;
   opacity: 0;
-  animation: fade-up 0.8s var(--ease) forwards;
+  animation: fade-up 0.9s var(--ease) forwards;
   animation-delay: 0.2s;
 }
 
 @media (min-width: 768px) {
   .hero-photo {
-    /* Desktop: photo gets the bigger half — visually dominant */
-    width: 50%;
-    max-width: 560px;
-    align-self: stretch;            /* stretch to match the hero height */
+    /* BIG: 55% of hero width, up to ~600px */
+    width: 55%;
+    max-width: 600px;
     display: flex;
     align-items: center;
   }
@@ -232,27 +245,22 @@ main {
   height: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  box-shadow: 0 25px 60px -20px rgba(74, 93, 58, 0.35);
-}
-
-.tagline {
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  max-width: 540px;
+  box-shadow:
+    0 30px 60px -25px rgba(74, 93, 58, 0.4),
+    0 10px 25px -10px rgba(0, 0, 0, 0.08);
 }
 
 /* ============================================
-   FEATURED ENDEAVOUR BLOCK
-   A subtle highlight card for what you're working on now.
+   FEATURED ENDEAVOUR
    ============================================ */
 .featured {
   background-color: var(--accent-soft);
   border-left: 3px solid var(--accent);
   border-radius: 6px;
   padding: 1.75rem 1.75rem 1.75rem 1.5rem;
-  margin: 1rem 0 3rem;
+  margin: 3rem 0;
 }
 
 .featured-label {
@@ -267,7 +275,6 @@ main {
   margin-bottom: 0.75rem;
 }
 
-/* The little pulsing dot — a small touch that says "this is live" */
 .featured-dot {
   display: inline-block;
   width: 8px;
@@ -360,9 +367,37 @@ main {
 }
 
 /* ============================================
-   PROJECT CARDS (new grid version)
-   Cards are <button> elements so they're keyboard-accessible.
-   On mobile they stack; on wider screens they form 2 columns.
+   HIGHLIGHT LIST (for About page bullets)
+   ============================================ */
+.highlight-list {
+  list-style: none;
+  margin: 1rem 0 1.5rem;
+  padding: 0;
+}
+
+.highlight-list li {
+  position: relative;
+  padding: 0.65rem 0 0.65rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.highlight-list li:last-child {
+  border-bottom: none;
+}
+
+.highlight-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.05rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+/* ============================================
+   PROJECT CARDS
    ============================================ */
 .project-grid {
   display: grid;
@@ -377,12 +412,10 @@ main {
 }
 
 .project-card {
-  /* Reset default button styling */
   font: inherit;
   text-align: left;
   cursor: pointer;
   border: 1px solid var(--border);
-
   background-color: var(--card-bg);
   padding: 1.5rem;
   border-radius: 10px;
@@ -426,16 +459,13 @@ main {
   color: var(--accent);
   font-weight: 500;
   font-size: 0.9rem;
-  margin-top: auto; /* pushes to bottom so cards line up */
+  margin-top: auto;
 }
 
 /* ============================================
    PROJECT MODAL
-   The <dialog> element is built into HTML and handles
-   focus and ESC-to-close for free.
    ============================================ */
 .project-modal {
-  /* Reset default dialog styles */
   border: none;
   padding: 0;
   background: transparent;
@@ -446,13 +476,11 @@ main {
   color: var(--text);
 }
 
-/* The dark background behind the modal */
 .project-modal::backdrop {
   background-color: rgba(42, 42, 40, 0.5);
   backdrop-filter: blur(3px);
 }
 
-/* The actual modal content */
 .project-modal article {
   background-color: var(--bg);
   padding: 2rem;
@@ -535,7 +563,6 @@ main {
   border-bottom-color: var(--accent);
 }
 
-/* Modal open animation */
 .project-modal[open] {
   animation: modal-in 0.25s var(--ease);
 }
@@ -597,6 +624,7 @@ main {
     flex-direction: column;
     gap: 0.75rem;
     align-items: flex-start;
+    padding: 1.5rem 1.5rem 1rem;
   }
   .site-header nav a {
     margin-left: 0;

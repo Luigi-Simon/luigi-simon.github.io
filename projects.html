@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects — Simon Christian Luigi Soriano</title>
-  <meta name="description" content="Projects and things I've been building." />
+  <title>Projects — Simon Soriano</title>
+  <meta name="description" content="Projects, hackathon builds, and experiments by Simon Soriano." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,40 +27,35 @@
 
     <section class="page-intro">
       <h1>Projects</h1>
-      <p class="tagline">A few things I've been working on. Click any card for details.</p>
+      <p class="tagline">Hackathon builds, school projects, and experiments. Click any card for details.</p>
     </section>
 
-    <!-- ========================================
-         PROJECTS GRID
-         Each card has data-project="..." which matches a modal below.
-         The JS uses this to know which modal to open when clicked.
-         ======================================== -->
     <section class="section reveal">
       <div class="project-grid">
 
-        <button class="project-card" data-project="project-one">
-          <h3>Project One</h3>
-          <p class="project-meta">2025 · School project</p>
+        <button class="project-card" data-project="plaquepal">
+          <h3>PlaquePal</h3>
+          <p class="project-meta">2025 · Hackathon</p>
           <p class="project-summary">
-            A short, friendly description of what this project is and why you made it.
+            AI-augmented handheld ultrasound system for cardiovascular screening.
           </p>
           <span class="project-cta">Read more →</span>
         </button>
 
-        <button class="project-card" data-project="project-two">
-          <h3>Project Two</h3>
-          <p class="project-meta">2025 · Personal</p>
+        <button class="project-card" data-project="ideate-2025">
+          <h3>IDEATE 2025</h3>
+          <p class="project-meta">2025 · Award winner</p>
           <p class="project-summary">
-            Another short description. Talk about what problem it solved.
+            Prototype disease detection system — "Most Innovative Award", semi-finalist.
           </p>
           <span class="project-cta">Read more →</span>
         </button>
 
-        <button class="project-card" data-project="project-three">
-          <h3>Project Three</h3>
-          <p class="project-meta">2024 · Experiment</p>
+        <button class="project-card" data-project="study-royale">
+          <h3>Study Royale</h3>
+          <p class="project-meta">2025 · Side project</p>
           <p class="project-summary">
-            One more example card. Even small experiments are worth showing.
+            A productivity game that gamifies studying with mobile-game-inspired loops.
           </p>
           <span class="project-cta">Read more →</span>
         </button>
@@ -71,69 +66,83 @@
   </main>
 
   <!-- ========================================
-       MODALS
-       One <dialog> per project. The id matches the data-project attribute
-       on the card above. <dialog> is a real HTML element designed for this —
-       it handles focus, ESC-to-close, and backdrop overlay automatically.
+       MODALS — one per project
        ======================================== -->
 
-  <dialog class="project-modal" id="project-one">
+  <dialog class="project-modal" id="plaquepal">
     <button class="modal-close" aria-label="Close">×</button>
     <article>
-      <p class="project-meta">2025 · School project</p>
-      <h2>Project One</h2>
+      <p class="project-meta">2025 · Hackathon</p>
+      <h2>PlaquePal</h2>
       <p>
-        Full description of the project goes here. Talk about what it is,
-        what problem you were solving, and what you learned along the way.
-        A couple of paragraphs is plenty — visitors are skimming.
+        An AI-augmented handheld ultrasound system designed for cardiovascular
+        screening. The goal: make plaque detection accessible outside of
+        traditional clinical settings.
       </p>
       <p>
-        Mention the tools you used, any challenges, and what you'd do differently
-        next time. People love hearing the story behind the work.
+        We used <strong>MediaPipe</strong> computer vision for real-time
+        telemetry, allowing the device to track and analyze imagery on the fly
+        rather than requiring a specialist to interpret results after the fact.
       </p>
       <h3>What I learned</h3>
       <ul>
-        <li>Some skill or concept</li>
-        <li>Another thing you picked up</li>
-        <li>A small win that mattered</li>
+        <li>Real-time computer vision pipelines with MediaPipe</li>
+        <li>Designing for hardware-software integration under hackathon time pressure</li>
+        <li>How to communicate technical health-tech concepts to non-technical judges</li>
       </ul>
       <div class="modal-links">
-        <a href="#" target="_blank" rel="noopener">View live →</a>
         <a href="#" target="_blank" rel="noopener">Source code →</a>
       </div>
     </article>
   </dialog>
 
-  <dialog class="project-modal" id="project-two">
+  <dialog class="project-modal" id="ideate-2025">
     <button class="modal-close" aria-label="Close">×</button>
     <article>
-      <p class="project-meta">2025 · Personal</p>
-      <h2>Project Two</h2>
+      <p class="project-meta">2025 · Award winner</p>
+      <h2>IDEATE 2025</h2>
       <p>
-        Full description for project two. Replace this text with the real story
-        behind the project.
+        A prototype disease detection system built for the IDEATE 2025
+        competition. The project earned the <strong>Most Innovative Award</strong>
+        and reached the semi-finals.
       </p>
-      <h3>What I learned</h3>
+      <p>
+        The idea explored how early disease detection could become more accessible
+        and affordable, especially in regions where diagnostic infrastructure is
+        limited.
+      </p>
+      <h3>Highlights</h3>
       <ul>
-        <li>Something interesting</li>
-        <li>Something useful</li>
+        <li>"Most Innovative Award" winner</li>
+        <li>Semi-finalist in a competitive cohort</li>
+        <li>Cross-disciplinary collaboration between CS and health-focused teammates</li>
       </ul>
       <div class="modal-links">
-        <a href="#" target="_blank" rel="noopener">View live →</a>
-        <a href="#" target="_blank" rel="noopener">Source code →</a>
+        <a href="#" target="_blank" rel="noopener">Read the writeup →</a>
       </div>
     </article>
   </dialog>
 
-  <dialog class="project-modal" id="project-three">
+  <dialog class="project-modal" id="study-royale">
     <button class="modal-close" aria-label="Close">×</button>
     <article>
-      <p class="project-meta">2024 · Experiment</p>
-      <h2>Project Three</h2>
+      <p class="project-meta">2025 · Side project</p>
+      <h2>Study Royale</h2>
       <p>
-        Full description for project three. This was an experiment, so feel
-        free to talk about what didn't work as well as what did.
+        A productivity-focused game that turns studying into a play experience.
+        The design borrows core loops from popular mobile games — progression,
+        rewards, light competition — and applies them to focused study sessions.
       </p>
+      <p>
+        The project was equal parts design exercise and code experiment: how do
+        you make something genuinely motivating without making it manipulative?
+      </p>
+      <h3>What I explored</h3>
+      <ul>
+        <li>Game design principles applied to non-game contexts</li>
+        <li>Prototyping interactive UI quickly</li>
+        <li>The line between motivation and dark patterns</li>
+      </ul>
       <div class="modal-links">
         <a href="#" target="_blank" rel="noopener">Source code →</a>
       </div>
