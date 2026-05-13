@@ -1,0 +1,237 @@
+/* ============================================
+   DESIGN TOKENS
+   These CSS variables hold our colors, fonts, and
+   spacing. Change them here and the whole site updates.
+   ============================================ */
+:root {
+  /* Earthy color palette */
+  --bg: #faf8f3;          /* warm off-white background */
+  --text: #2a2a28;        /* soft dark for body text */
+  --text-muted: #6b6b66;  /* lighter grey for meta info */
+  --accent: #4a5d3a;      /* forest/olive green */
+  --accent-hover: #38462b;
+  --border: #e6e1d6;      /* soft beige for dividers */
+
+  /* Fonts */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Layout */
+  --max-width: 720px;     /* keeps text comfortably readable */
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* nice smooth scroll for nav links */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.site-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.site-header nav a {
+  margin-left: 1.5rem;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.site-header nav a:hover {
+  color: var(--accent);
+}
+
+/* ============================================
+   MAIN LAYOUT
+   Constrain content width and center it.
+   ============================================ */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  padding: 4rem 0 3rem;
+}
+
+.hero-greeting {
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 2.8rem); /* responsive size */
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 540px;
+}
+
+/* ============================================
+   SECTIONS (About, Projects, Contact)
+   ============================================ */
+.section {
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+.section p {
+  margin-bottom: 1rem;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   PROJECT CARDS
+   ============================================ */
+.project {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.project:last-child {
+  border-bottom: none;
+}
+
+.project h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.project-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-links {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.project-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.project-links a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* ============================================
+   CONTACT
+   ============================================ */
+.contact-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.contact-list li {
+  margin-bottom: 0.5rem;
+}
+
+.contact-list a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.2s;
+}
+
+.contact-list a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.site-footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* ============================================
+   RESPONSIVE TWEAKS
+   ============================================ */
+@media (max-width: 480px) {
+  .site-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .site-header nav a {
+    margin-left: 0;
+    margin-right: 1.25rem;
+  }
+}
