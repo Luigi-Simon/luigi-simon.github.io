@@ -170,45 +170,53 @@ main {
 }
 
 /* ============================================
-   HERO WITH PHOTO
-   On wider screens: text on the left, photo on the right.
-   On phones: photo on top, text below.
+   HERO WITH PHOTO — bigger photo version
+   The hero gets its own wider container so the photo
+   has room to be large and prominent (like the reference site).
    ============================================ */
+
+/* Override main's max-width specifically for the hero */
 .hero-with-photo {
+  max-width: 1000px;
+  width: calc(100% + 3rem);          /* expand past main's padding */
+  margin-left: -1.5rem;              /* pull left to compensate */
+  margin-right: -1.5rem;
+  padding: 0 1.5rem;
+
   display: flex;
-  flex-direction: column-reverse; /* photo above text on mobile */
+  flex-direction: column-reverse;    /* photo on top, text below — mobile */
   gap: 2rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
-@media (min-width: 600px) {
+/* On tablets and up: side by side, photo gets ~half the width */
+@media (min-width: 700px) {
   .hero-with-photo {
-    flex-direction: row;          /* side by side on bigger screens */
-    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
-    gap: 2.5rem;
+    gap: 3rem;
   }
 }
 
 .hero-text {
-  flex: 1; /* let the text take the available space */
+  flex: 1;
+  min-width: 0;
 }
 
 .hero-photo {
-  /* On mobile, fixed-ish size centered */
-  width: 180px;
+  /* Mobile: medium-sized, centered */
+  width: 260px;
   flex-shrink: 0;
-  align-self: center;
-  /* Fade in with the rest of the hero */
   opacity: 0;
   animation: fade-up 0.8s var(--ease) forwards;
   animation-delay: 0.2s;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .hero-photo {
-    width: 200px;
-    align-self: auto;
+    /* Desktop: big and prominent — about 45% of hero width */
+    width: 45%;
+    max-width: 400px;
   }
 }
 
@@ -216,11 +224,11 @@ main {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 4;            /* keeps portrait proportions */
-  object-fit: cover;              /* crops to fill the box, no squishing */
-  border-radius: 12px;
+  aspect-ratio: 3 / 4;               /* keeps the portrait proportions */
+  object-fit: cover;                 /* crops cleanly */
+  border-radius: 14px;
   border: 1px solid var(--border);
-  box-shadow: 0 12px 30px -12px rgba(74, 93, 58, 0.25);
+  box-shadow: 0 20px 50px -20px rgba(74, 93, 58, 0.3);
 }
 
 .tagline {
