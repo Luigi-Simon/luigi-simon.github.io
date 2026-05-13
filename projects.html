@@ -14,7 +14,6 @@
 </head>
 <body>
 
-  <!-- SHARED HEADER — same as index.html, but "Projects" has the active class -->
   <header class="site-header">
     <a href="index.html" class="logo">SCLS</a>
     <nav>
@@ -26,57 +25,120 @@
 
   <main>
 
-    <!-- PAGE HEADER -->
     <section class="page-intro">
       <h1>Projects</h1>
-      <p class="tagline">A few things I've been working on and tinkering with.</p>
+      <p class="tagline">A few things I've been working on. Click any card for details.</p>
     </section>
 
-    <!-- PROJECTS LIST — fades in on scroll -->
+    <!-- ========================================
+         PROJECTS GRID
+         Each card has data-project="..." which matches a modal below.
+         The JS uses this to know which modal to open when clicked.
+         ======================================== -->
     <section class="section reveal">
+      <div class="project-grid">
 
-      <article class="project">
-        <h3>Project One</h3>
-        <p class="project-meta">2025 · School project</p>
-        <p>
-          A short, friendly description of what this project is and why you
-          made it. Two or three sentences is plenty — keep it human.
-        </p>
-        <div class="project-links">
-          <a href="#">View project →</a>
-          <a href="#">Source code →</a>
-        </div>
-      </article>
+        <button class="project-card" data-project="project-one">
+          <h3>Project One</h3>
+          <p class="project-meta">2025 · School project</p>
+          <p class="project-summary">
+            A short, friendly description of what this project is and why you made it.
+          </p>
+          <span class="project-cta">Read more →</span>
+        </button>
 
-      <article class="project">
-        <h3>Project Two</h3>
-        <p class="project-meta">2025 · Personal</p>
-        <p>
-          Another short description. Talk about what problem it solved or what
-          you learned. People remember stories more than feature lists.
-        </p>
-        <div class="project-links">
-          <a href="#">View project →</a>
-          <a href="#">Source code →</a>
-        </div>
-      </article>
+        <button class="project-card" data-project="project-two">
+          <h3>Project Two</h3>
+          <p class="project-meta">2025 · Personal</p>
+          <p class="project-summary">
+            Another short description. Talk about what problem it solved.
+          </p>
+          <span class="project-cta">Read more →</span>
+        </button>
 
-      <article class="project">
-        <h3>Project Three</h3>
-        <p class="project-meta">2024 · Experiment</p>
-        <p>
-          One more example card. Even small experiments are worth showing —
-          they show how you think and what you find interesting.
-        </p>
-        <div class="project-links">
-          <a href="#">View project →</a>
-          <a href="#">Source code →</a>
-        </div>
-      </article>
+        <button class="project-card" data-project="project-three">
+          <h3>Project Three</h3>
+          <p class="project-meta">2024 · Experiment</p>
+          <p class="project-summary">
+            One more example card. Even small experiments are worth showing.
+          </p>
+          <span class="project-cta">Read more →</span>
+        </button>
 
+      </div>
     </section>
 
   </main>
+
+  <!-- ========================================
+       MODALS
+       One <dialog> per project. The id matches the data-project attribute
+       on the card above. <dialog> is a real HTML element designed for this —
+       it handles focus, ESC-to-close, and backdrop overlay automatically.
+       ======================================== -->
+
+  <dialog class="project-modal" id="project-one">
+    <button class="modal-close" aria-label="Close">×</button>
+    <article>
+      <p class="project-meta">2025 · School project</p>
+      <h2>Project One</h2>
+      <p>
+        Full description of the project goes here. Talk about what it is,
+        what problem you were solving, and what you learned along the way.
+        A couple of paragraphs is plenty — visitors are skimming.
+      </p>
+      <p>
+        Mention the tools you used, any challenges, and what you'd do differently
+        next time. People love hearing the story behind the work.
+      </p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>Some skill or concept</li>
+        <li>Another thing you picked up</li>
+        <li>A small win that mattered</li>
+      </ul>
+      <div class="modal-links">
+        <a href="#" target="_blank" rel="noopener">View live →</a>
+        <a href="#" target="_blank" rel="noopener">Source code →</a>
+      </div>
+    </article>
+  </dialog>
+
+  <dialog class="project-modal" id="project-two">
+    <button class="modal-close" aria-label="Close">×</button>
+    <article>
+      <p class="project-meta">2025 · Personal</p>
+      <h2>Project Two</h2>
+      <p>
+        Full description for project two. Replace this text with the real story
+        behind the project.
+      </p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>Something interesting</li>
+        <li>Something useful</li>
+      </ul>
+      <div class="modal-links">
+        <a href="#" target="_blank" rel="noopener">View live →</a>
+        <a href="#" target="_blank" rel="noopener">Source code →</a>
+      </div>
+    </article>
+  </dialog>
+
+  <dialog class="project-modal" id="project-three">
+    <button class="modal-close" aria-label="Close">×</button>
+    <article>
+      <p class="project-meta">2024 · Experiment</p>
+      <h2>Project Three</h2>
+      <p>
+        Full description for project three. This was an experiment, so feel
+        free to talk about what didn't work as well as what did.
+      </p>
+      <div class="modal-links">
+        <a href="#" target="_blank" rel="noopener">Source code →</a>
+      </div>
+    </article>
+  </dialog>
 
   <footer class="site-footer">
     <p>© 2026 Simon Christian Luigi Soriano. Built with care.</p>

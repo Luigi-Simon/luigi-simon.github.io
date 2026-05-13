@@ -7,14 +7,14 @@
   --text-muted: #6b6b66;
   --accent: #4a5d3a;
   --accent-hover: #38462b;
+  --accent-soft: rgba(74, 93, 58, 0.08);
   --border: #e6e1d6;
+  --card-bg: #ffffff;
 
   --font-serif: 'Fraunces', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
 
   --max-width: 720px;
-
-  /* A shared timing function for smooth, natural-feeling motion */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -48,11 +48,6 @@ a:hover {
   color: var(--accent-hover);
 }
 
-/* ============================================
-   ACCESSIBILITY: respect users who disable motion
-   Some people get motion sickness or just prefer no animation.
-   This turns off all animations for them. Good practice to include.
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -81,15 +76,8 @@ a:hover {
   letter-spacing: 0.5px;
 }
 
-/* ============================================
-   NAV LINKS — with sliding underline on hover (#2)
-   How it works:
-   - Each link has an invisible underline (::after pseudo-element)
-   - It starts at width: 0 (invisible)
-   - On hover, it grows to width: 100% smoothly
-   ============================================ */
 .site-header nav a {
-  position: relative; /* so the ::after can be positioned inside */
+  position: relative;
   margin-left: 1.5rem;
   color: var(--text);
   text-decoration: none;
@@ -100,11 +88,11 @@ a:hover {
 }
 
 .site-header nav a::after {
-  content: '';                     /* required for pseudo-elements to show */
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 0;                        /* start invisible */
+  width: 0;
   height: 2px;
   background-color: var(--accent);
   transition: width 0.3s var(--ease);
@@ -115,10 +103,9 @@ a:hover {
 }
 
 .site-header nav a:hover::after {
-  width: 100%;                     /* slide out to full width */
+  width: 100%;
 }
 
-/* Active nav link: underline stays visible */
 .site-header nav a.active {
   color: var(--accent);
 }
@@ -137,11 +124,7 @@ main {
 }
 
 /* ============================================
-   HERO — fades up on page load (#1)
-   How it works:
-   - Each piece starts shifted down 20px and invisible (opacity: 0)
-   - The "fade-up" animation moves it back to its real spot and fades it in
-   - "animation-delay" staggers them so they appear one after another
+   HERO + fade-up animation
    ============================================ */
 @keyframes fade-up {
   from {
@@ -161,8 +144,8 @@ main {
 .hero-greeting,
 .hero h1,
 .hero .tagline {
-  opacity: 0;                                       /* start invisible */
-  animation: fade-up 0.8s var(--ease) forwards;     /* "forwards" = keep the final state */
+  opacity: 0;
+  animation: fade-up 0.8s var(--ease) forwards;
 }
 
 .hero-greeting {
@@ -193,7 +176,70 @@ main {
 }
 
 /* ============================================
-   PAGE INTRO (for projects + contact pages)
+   FEATURED ENDEAVOUR BLOCK
+   A subtle highlight card for what you're working on now.
+   ============================================ */
+.featured {
+  background-color: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 1.75rem 1.75rem 1.75rem 1.5rem;
+  margin: 1rem 0 3rem;
+}
+
+.featured-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.75rem;
+}
+
+/* The little pulsing dot — a small touch that says "this is live" */
+.featured-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+.featured-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.featured-description {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.featured-link {
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease);
+}
+
+.featured-link:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* ============================================
+   PAGE INTRO
    ============================================ */
 .page-intro {
   padding: 3rem 0 1.5rem;
@@ -208,11 +254,7 @@ main {
 }
 
 /* ============================================
-   SECTIONS — fade in on scroll (#4)
-   How it works:
-   - .reveal starts invisible and shifted down
-   - JavaScript adds .is-visible when the section scrolls into view
-   - The transition smoothly animates it into place
+   SCROLL REVEAL
    ============================================ */
 .reveal {
   opacity: 0;
@@ -225,6 +267,9 @@ main {
   transform: translateY(0);
 }
 
+/* ============================================
+   SECTIONS
+   ============================================ */
 .section {
   padding: 3rem 0;
   border-top: 1px solid var(--border);
@@ -247,60 +292,195 @@ main {
 }
 
 /* ============================================
-   PROJECT CARDS — lift + shadow on hover (#3)
-   How it works:
-   - On hover, the card moves up 4px and gains a soft shadow
-   - "transition" makes it smooth instead of snappy
+   PROJECT CARDS (new grid version)
+   Cards are <button> elements so they're keyboard-accessible.
+   On mobile they stack; on wider screens they form 2 columns.
    ============================================ */
-.project {
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-card {
+  /* Reset default button styling */
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid var(--border);
+
+  background-color: var(--card-bg);
   padding: 1.5rem;
-  margin: 0 -1.5rem;                                /* negate padding so it aligns with text */
-  border-radius: 8px;
-  border-bottom: 1px solid var(--border);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background-color 0.3s var(--ease);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
-.project:last-child {
-  border-bottom: none;
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -12px rgba(74, 93, 58, 0.18);
+  border-color: var(--accent);
 }
 
-.project:hover {
-  transform: translateY(-4px);                      /* lift the card */
-  box-shadow: 0 12px 30px -10px rgba(74, 93, 58, 0.15); /* soft green-tinted shadow */
-  background-color: rgba(255, 255, 255, 0.5);       /* slight color shift */
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.project h3 {
+.project-card h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  color: var(--text);
 }
 
 .project-meta {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
 }
 
-.project-links {
-  margin-top: 0.75rem;
+.project-summary {
+  color: var(--text);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-cta {
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-top: auto; /* pushes to bottom so cards line up */
+}
+
+/* ============================================
+   PROJECT MODAL
+   The <dialog> element is built into HTML and handles
+   focus and ESC-to-close for free.
+   ============================================ */
+.project-modal {
+  /* Reset default dialog styles */
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: min(560px, 92vw);
+  width: 100%;
+  max-height: 85vh;
+  border-radius: 12px;
+  color: var(--text);
+}
+
+/* The dark background behind the modal */
+.project-modal::backdrop {
+  background-color: rgba(42, 42, 40, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+/* The actual modal content */
+.project-modal article {
+  background-color: var(--bg);
+  padding: 2rem;
+  border-radius: 12px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.project-modal h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.project-modal h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.project-modal p {
+  margin-bottom: 1rem;
+}
+
+.project-modal ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+}
+
+.project-modal ul li {
+  margin-bottom: 0.25rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: var(--border);
+  color: var(--text);
+}
+
+.modal-links {
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
-.project-links a {
+.modal-links a {
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s var(--ease);
 }
 
-.project-links a:hover {
+.modal-links a:hover {
   border-bottom-color: var(--accent);
+}
+
+/* Modal open animation */
+.project-modal[open] {
+  animation: modal-in 0.25s var(--ease);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ============================================

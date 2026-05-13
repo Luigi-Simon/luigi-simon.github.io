@@ -1,18 +1,57 @@
-# Personal Portfolio — Simon Christian Luigi Soriano
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Simon Christian Luigi Soriano</title>
+  <meta name="description" content="Get in touch with Simon." />
 
-My personal website. Built with plain HTML and CSS, hosted on GitHub Pages.
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-## Structure
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-- `index.html` — page content
-- `style.css` — all the styling
-- `README.md` — this file
+  <!-- SHARED HEADER — same as other pages, "Contact" is active here -->
+  <header class="site-header">
+    <a href="index.html" class="logo">SCLS</a>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </header>
 
-## Running locally
+  <main>
 
-Just open `index.html` in your browser. No build steps, no dependencies.
+    <!-- PAGE HEADER -->
+    <section class="page-intro">
+      <h1>Get in touch</h1>
+      <p class="tagline">The best ways to reach me — pick whichever you like.</p>
+    </section>
 
-## Editing
+    <section class="section reveal">
+      <p>
+        I'm always happy to hear from people, whether it's about a project, a
+        question, or just to say hi. Email is the most reliable way to reach me.
+      </p>
 
-- Change content in `index.html`
-- Change colors, fonts, and spacing in the `:root` block at the top of `style.css`
+      <ul class="contact-list">
+        <li><a href="mailto:your@email.com">your@email.com</a></li>
+        <li><a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Simon Christian Luigi Soriano. Built with care.</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

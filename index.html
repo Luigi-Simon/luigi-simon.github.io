@@ -14,10 +14,6 @@
 </head>
 <body>
 
-  <!-- ========================================
-       HEADER / NAV
-       ⚠️ Repeated across all pages — keep in sync.
-       ======================================== -->
   <header class="site-header">
     <a href="index.html" class="logo">SCLS</a>
     <nav>
@@ -29,14 +25,32 @@
 
   <main>
 
-    <!-- HERO — auto-fades in on page load via CSS -->
+    <!-- HERO -->
     <section class="hero">
       <p class="hero-greeting">Hello there 👋</p>
       <h1>I'm Simon Christian Luigi Soriano.</h1>
       <p class="tagline">Student, builder, lifelong learner — based in Ho Chi Minh City.</p>
     </section>
 
-    <!-- ABOUT — "reveal" class makes it fade in when scrolled to -->
+    <!-- ========================================
+         LATEST ENDEAVOUR
+         A featured highlight block. Update this whenever
+         you start something new.
+         ======================================== -->
+    <section class="featured reveal">
+      <p class="featured-label">
+        <span class="featured-dot"></span>
+        Currently working on
+      </p>
+      <h2 class="featured-title">My first portfolio site</h2>
+      <p class="featured-description">
+        Learning HTML, CSS, and the small joy of pushing things to GitHub.
+        Building this site by hand — one section at a time.
+      </p>
+      <a href="projects.html" class="featured-link">See all projects →</a>
+    </section>
+
+    <!-- ABOUT -->
     <section class="section reveal">
       <h2>About me</h2>
       <p>
@@ -56,13 +70,12 @@
       </p>
     </section>
 
-  </main>
+  </main> 
 
   <footer class="site-footer">
     <p>© 2026 Simon Christian Luigi Soriano. Built with care.</p>
   </footer>
 
-  <!-- Load the scroll-reveal script at the end of the page -->
   <script src="script.js"></script>
 
 </body>

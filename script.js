@@ -1,35 +1,62 @@
 // ============================================
 // SCROLL-TRIGGERED FADE-IN
-// Finds every element with the class "reveal" and adds
-// the "is-visible" class when it scrolls into view.
-// The CSS handles the actual fade animation.
-//
-// IntersectionObserver is a built-in browser feature —
-// it efficiently watches elements and tells us when they
-// enter or leave the visible part of the page.
+// Adds "is-visible" to .reveal elements when they enter the viewport.
 // ============================================
-
-// Wait until the HTML is fully loaded before running this
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Find every element on the page with class="reveal"
   const revealElements = document.querySelectorAll('.reveal');
 
-  // Create the observer that watches them
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      // entry.isIntersecting = true when the element is in view
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        // Once revealed, stop watching this element (it doesn't need to fade in twice)
         observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.15,        // trigger when 15% of the element is visible
-    rootMargin: '0px 0px -50px 0px'  // trigger slightly before it fully enters view
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
   });
 
-  // Tell the observer to watch each reveal element
   revealElements.forEach((el) => observer.observe(el));
+
+  // ============================================
+  // PROJECT MODALS
+  // Click a card → open the matching <dialog>.
+  // Click close button or backdrop → close it.
+  // ESC key closes automatically (built into <dialog>).
+  // ============================================
+
+  // Find every project card
+  const cards = document.querySelectorAll('.project-card');
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      // The card's data-project attribute tells us which modal to open
+      const modalId = card.dataset.project;
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.showModal();  // built-in <dialog> method
+      }
+    });
+  });
+
+  // Wire up every modal's close button
+  const modals = document.querySelectorAll('.project-modal');
+
+  modals.forEach((modal) => {
+    // Close when the × button is clicked
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => modal.close());
+    }
+
+    // Close when clicking the dark backdrop (outside the modal content)
+    modal.addEventListener('click', (event) => {
+      // event.target is the modal itself only when you click the backdrop
+      // (clicks on inner content don't bubble up to the dialog element directly)
+      if (event.target === modal) {
+        modal.close();
+      }
+    });
+  });
 });
