@@ -1,27 +1,25 @@
 /* ============================================
    DESIGN TOKENS
-   These CSS variables hold our colors, fonts, and
-   spacing. Change them here and the whole site updates.
    ============================================ */
 :root {
-  /* Earthy color palette */
-  --bg: #faf8f3;          /* warm off-white background */
-  --text: #2a2a28;        /* soft dark for body text */
-  --text-muted: #6b6b66;  /* lighter grey for meta info */
-  --accent: #4a5d3a;      /* forest/olive green */
+  --bg: #faf8f3;
+  --text: #2a2a28;
+  --text-muted: #6b6b66;
+  --accent: #4a5d3a;
   --accent-hover: #38462b;
-  --border: #e6e1d6;      /* soft beige for dividers */
+  --border: #e6e1d6;
 
-  /* Fonts */
   --font-serif: 'Fraunces', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
 
-  /* Layout */
-  --max-width: 720px;     /* keeps text comfortably readable */
+  --max-width: 720px;
+
+  /* A shared timing function for smooth, natural-feeling motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ============================================
-   RESET & BASE STYLES
+   RESET & BASE
    ============================================ */
 * {
   box-sizing: border-box;
@@ -30,7 +28,7 @@
 }
 
 html {
-  scroll-behavior: smooth; /* nice smooth scroll for nav links */
+  scroll-behavior: smooth;
 }
 
 body {
@@ -40,6 +38,26 @@ body {
   line-height: 1.6;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* ============================================
+   ACCESSIBILITY: respect users who disable motion
+   Some people get motion sickness or just prefer no animation.
+   This turns off all animations for them. Good practice to include.
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ============================================
@@ -63,22 +81,54 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ============================================
+   NAV LINKS — with sliding underline on hover (#2)
+   How it works:
+   - Each link has an invisible underline (::after pseudo-element)
+   - It starts at width: 0 (invisible)
+   - On hover, it grows to width: 100% smoothly
+   ============================================ */
 .site-header nav a {
+  position: relative; /* so the ::after can be positioned inside */
   margin-left: 1.5rem;
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.2s;
+  padding-bottom: 4px;
+  transition: color 0.25s var(--ease);
+}
+
+.site-header nav a::after {
+  content: '';                     /* required for pseudo-elements to show */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;                        /* start invisible */
+  height: 2px;
+  background-color: var(--accent);
+  transition: width 0.3s var(--ease);
 }
 
 .site-header nav a:hover {
   color: var(--accent);
 }
 
+.site-header nav a:hover::after {
+  width: 100%;                     /* slide out to full width */
+}
+
+/* Active nav link: underline stays visible */
+.site-header nav a.active {
+  color: var(--accent);
+}
+
+.site-header nav a.active::after {
+  width: 100%;
+}
+
 /* ============================================
    MAIN LAYOUT
-   Constrain content width and center it.
    ============================================ */
 main {
   max-width: var(--max-width);
@@ -87,25 +137,53 @@ main {
 }
 
 /* ============================================
-   HERO
+   HERO — fades up on page load (#1)
+   How it works:
+   - Each piece starts shifted down 20px and invisible (opacity: 0)
+   - The "fade-up" animation moves it back to its real spot and fades it in
+   - "animation-delay" staggers them so they appear one after another
    ============================================ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .hero {
   padding: 4rem 0 3rem;
+}
+
+.hero-greeting,
+.hero h1,
+.hero .tagline {
+  opacity: 0;                                       /* start invisible */
+  animation: fade-up 0.8s var(--ease) forwards;     /* "forwards" = keep the final state */
 }
 
 .hero-greeting {
   color: var(--accent);
   font-weight: 500;
   margin-bottom: 0.5rem;
+  animation-delay: 0.1s;
 }
 
 .hero h1 {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 2.8rem); /* responsive size */
+  font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 1rem;
   letter-spacing: -0.5px;
+  animation-delay: 0.25s;
+}
+
+.hero .tagline {
+  animation-delay: 0.4s;
 }
 
 .tagline {
@@ -115,8 +193,38 @@ main {
 }
 
 /* ============================================
-   SECTIONS (About, Projects, Contact)
+   PAGE INTRO (for projects + contact pages)
    ============================================ */
+.page-intro {
+  padding: 3rem 0 1.5rem;
+}
+
+.page-intro h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.3px;
+}
+
+/* ============================================
+   SECTIONS — fade in on scroll (#4)
+   How it works:
+   - .reveal starts invisible and shifted down
+   - JavaScript adds .is-visible when the section scrolls into view
+   - The transition smoothly animates it into place
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section {
   padding: 3rem 0;
   border-top: 1px solid var(--border);
@@ -139,15 +247,27 @@ main {
 }
 
 /* ============================================
-   PROJECT CARDS
+   PROJECT CARDS — lift + shadow on hover (#3)
+   How it works:
+   - On hover, the card moves up 4px and gains a soft shadow
+   - "transition" makes it smooth instead of snappy
    ============================================ */
 .project {
-  padding: 1.75rem 0;
+  padding: 1.5rem;
+  margin: 0 -1.5rem;                                /* negate padding so it aligns with text */
+  border-radius: 8px;
   border-bottom: 1px solid var(--border);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background-color 0.3s var(--ease);
 }
 
 .project:last-child {
   border-bottom: none;
+}
+
+.project:hover {
+  transform: translateY(-4px);                      /* lift the card */
+  box-shadow: 0 12px 30px -10px rgba(74, 93, 58, 0.15); /* soft green-tinted shadow */
+  background-color: rgba(255, 255, 255, 0.5);       /* slight color shift */
 }
 
 .project h3 {
@@ -176,7 +296,7 @@ main {
   font-weight: 500;
   font-size: 0.95rem;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s var(--ease);
 }
 
 .project-links a:hover {
@@ -184,7 +304,7 @@ main {
 }
 
 /* ============================================
-   CONTACT
+   CONTACT LIST
    ============================================ */
 .contact-list {
   list-style: none;
@@ -200,7 +320,7 @@ main {
   text-decoration: none;
   font-weight: 500;
   border-bottom: 1px solid var(--border);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s var(--ease);
 }
 
 .contact-list a:hover {
@@ -222,7 +342,7 @@ main {
 }
 
 /* ============================================
-   RESPONSIVE TWEAKS
+   RESPONSIVE
    ============================================ */
 @media (max-width: 480px) {
   .site-header {

@@ -16,9 +16,7 @@
 
   <!-- ========================================
        HEADER / NAV
-       ⚠️ This block is REPEATED on every page.
-       If you change it here, update projects.html and contact.html too.
-       The "active" class marks the current page.
+       ⚠️ Repeated across all pages — keep in sync.
        ======================================== -->
   <header class="site-header">
     <a href="index.html" class="logo">SCLS</a>
@@ -31,15 +29,15 @@
 
   <main>
 
-    <!-- HERO -->
+    <!-- HERO — auto-fades in on page load via CSS -->
     <section class="hero">
       <p class="hero-greeting">Hello there 👋</p>
       <h1>I'm Simon Christian Luigi Soriano.</h1>
       <p class="tagline">Student, builder, lifelong learner — based in Ho Chi Minh City.</p>
     </section>
 
-    <!-- ABOUT -->
-    <section class="section">
+    <!-- ABOUT — "reveal" class makes it fade in when scrolled to -->
+    <section class="section reveal">
       <h2>About me</h2>
       <p>
         I'm a student who likes learning by making things. This site is a small
@@ -60,10 +58,12 @@
 
   </main>
 
-  <!-- FOOTER — also repeated on every page -->
   <footer class="site-footer">
     <p>© 2026 Simon Christian Luigi Soriano. Built with care.</p>
   </footer>
+
+  <!-- Load the scroll-reveal script at the end of the page -->
+  <script src="script.js"></script>
 
 </body>
 </html>
