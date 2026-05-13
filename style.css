@@ -170,53 +170,59 @@ main {
 }
 
 /* ============================================
-   HERO WITH PHOTO — bigger photo version
-   The hero gets its own wider container so the photo
-   has room to be large and prominent (like the reference site).
+   HERO WITH PHOTO — full-width, photo dominates right
+   The hero sits OUTSIDE <main>, so it can use the full
+   viewport width. Text is constrained on the left, photo
+   sprawls across the right.
    ============================================ */
 
-/* Override main's max-width specifically for the hero */
 .hero-with-photo {
-  max-width: 1000px;
-  width: calc(100% + 3rem);          /* expand past main's padding */
-  margin-left: -1.5rem;              /* pull left to compensate */
-  margin-right: -1.5rem;
-  padding: 0 1.5rem;
+  width: 100%;
+  max-width: 1400px;          /* cap on ultra-wide monitors so it doesn't get silly */
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
 
   display: flex;
-  flex-direction: column-reverse;    /* photo on top, text below — mobile */
+  flex-direction: column-reverse;   /* mobile: photo above, text below */
   gap: 2rem;
   align-items: center;
 }
 
-/* On tablets and up: side by side, photo gets ~half the width */
-@media (min-width: 700px) {
+/* On tablets and up: text left, big photo right */
+@media (min-width: 768px) {
   .hero-with-photo {
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     gap: 3rem;
+    padding: 5rem 2.5rem 4rem;
+    min-height: 80vh;              /* hero feels full-height-ish on landing */
   }
 }
 
 .hero-text {
   flex: 1;
   min-width: 0;
+  max-width: 520px;                /* keep the text comfortably readable */
 }
 
 .hero-photo {
-  /* Mobile: medium-sized, centered */
-  width: 260px;
+  /* Mobile: large but contained */
+  width: 280px;
   flex-shrink: 0;
   opacity: 0;
   animation: fade-up 0.8s var(--ease) forwards;
   animation-delay: 0.2s;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 768px) {
   .hero-photo {
-    /* Desktop: big and prominent — about 45% of hero width */
-    width: 45%;
-    max-width: 400px;
+    /* Desktop: photo gets the bigger half — visually dominant */
+    width: 50%;
+    max-width: 560px;
+    align-self: stretch;            /* stretch to match the hero height */
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -224,11 +230,11 @@ main {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 4;               /* keeps the portrait proportions */
-  object-fit: cover;                 /* crops cleanly */
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
   border-radius: 14px;
   border: 1px solid var(--border);
-  box-shadow: 0 20px 50px -20px rgba(74, 93, 58, 0.3);
+  box-shadow: 0 25px 60px -20px rgba(74, 93, 58, 0.35);
 }
 
 .tagline {
