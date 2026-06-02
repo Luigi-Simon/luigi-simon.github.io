@@ -469,8 +469,14 @@ main {
   border: none;
   padding: 0;
   background: transparent;
-  max-width: min(560px, 92vw);
-  width: 100%;
+  
+  /* FIXED: Added margin auto to guarantee dead-center alignment */
+  margin: auto; 
+  
+  /* FIXED: Made the modal large (up to 900px wide) */
+  width: 90vw;
+  max-width: 900px; 
+  
   max-height: 85vh;
   border-radius: 12px;
   color: var(--text);
