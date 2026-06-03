@@ -67,8 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   const recentContainer = document.getElementById('recent-projects');
   if (recentContainer) {
-    fetch('projects.html')
-      .then((res) => res.text())
+    // Use absolute origin URL to avoid relative-path edge cases
+    const projectsUrl = `${location.origin}/projects.html`;
+    // Diagnostic log for troubleshooting
+    // eslint-disable-next-line no-console
+    console.log('Loading recent projects from', projectsUrl);
+
+    fetch(projectsUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.text();
+      })
       .then((htmlText) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlText, 'text/html');
