@@ -67,16 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   const recentContainer = document.getElementById('recent-projects');
   if (recentContainer) {
-    // Use absolute origin URL to avoid relative-path edge cases
-    const projectsUrl = `${location.origin}/projects.html`;
-    // Diagnostic log for troubleshooting
-    // eslint-disable-next-line no-console
-    console.log('Loading recent projects from', projectsUrl);
+    // Try relative fetch first (works when served or opened via http). If it
+    // fails (e.g., opened file://), fall back to origin-based URL.
+    const tryFetch = (url) => fetch(url).then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.text();
+    });
 
-    fetch(projectsUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.text();
+    // eslint-disable-next-line no-console
+    console.log('Attempting to load recent projects via relative path projects.html');
+
+    tryFetch('projects.html')
+      .catch((firstErr) => {
+        // If relative fetch fails, try origin-based URL (useful for some server setups)
+        const origin = location.origin && location.origin !== 'null' ? location.origin : '';
+        const fallback = origin ? `${origin}/projects.html` : 'projects.html';
+        // eslint-disable-next-line no-console
+        console.warn('Relative fetch failed, trying fallback URL:', fallback, firstErr);
+        return tryFetch(fallback);
       })
       .then((htmlText) => {
         const parser = new DOMParser();
