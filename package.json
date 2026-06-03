@@ -2,11 +2,11 @@
   "name": "personal-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal static site",
+  "description": "Personal portfolio site",
   "scripts": {
     "start": "npx http-server -c-1 . -p 8080",
     "start:py": "python -m http.server 8000"
   },
-  "author": "",
+  "author": "Simon Christian Luigi Soriano",
   "license": "MIT"
 }

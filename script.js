@@ -1,7 +1,3 @@
-// ============================================
-// SCROLL-TRIGGERED FADE-IN
-// Adds "is-visible" to .reveal elements when they enter the viewport.
-// ============================================
 document.addEventListener('DOMContentLoaded', () => {
   const revealElements = document.querySelectorAll('.reveal');
 
@@ -19,71 +15,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealElements.forEach((el) => observer.observe(el));
 
-  // ============================================
-  // PROJECT MODALS
-  // Click a card → open the matching <dialog>.
-  // Click close button or backdrop → close it.
-  // ESC key closes automatically (built into <dialog>).
-  // ============================================
-
-  // Find every project card
   const cards = document.querySelectorAll('.project-card');
 
   cards.forEach((card) => {
     card.addEventListener('click', () => {
-      // The card's data-project attribute tells us which modal to open
       const modalId = card.dataset.project;
       const modal = document.getElementById(modalId);
-      if (modal) {
-        modal.showModal();  // built-in <dialog> method
-      }
+      if (modal) modal.showModal();
     });
   });
 
-  // Wire up every modal's close button
   const modals = document.querySelectorAll('.project-modal');
-
   modals.forEach((modal) => {
-    // Close when the × button is clicked
     const closeBtn = modal.querySelector('.modal-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => modal.close());
-    }
-
-    // Close when clicking the dark backdrop (outside the modal content)
+    if (closeBtn) closeBtn.addEventListener('click', () => modal.close());
     modal.addEventListener('click', (event) => {
-      // event.target is the modal itself only when you click the backdrop
-      // (clicks on inner content don't bubble up to the dialog element directly)
-      if (event.target === modal) {
-        modal.close();
-      }
+      if (event.target === modal) modal.close();
     });
   });
 
-  // ============================================
-  // DYNAMIC RECENT PROJECTS
-  // Loads project cards from `projects.html` and renders the most recent 3
-  // into `#recent-projects` on the index page.
-  // ============================================
   const recentContainer = document.getElementById('recent-projects');
   if (recentContainer) {
-    // Try relative fetch first (works when served or opened via http). If it
-    // fails (e.g., opened file://), fall back to origin-based URL.
     const tryFetch = (url) => fetch(url).then((res) => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.text();
     });
 
-    // eslint-disable-next-line no-console
-    console.log('Attempting to load recent projects via relative path projects.html');
-
     tryFetch('projects.html')
       .catch((firstErr) => {
-        // If relative fetch fails, try origin-based URL (useful for some server setups)
         const origin = location.origin && location.origin !== 'null' ? location.origin : '';
         const fallback = origin ? `${origin}/projects.html` : 'projects.html';
-        // eslint-disable-next-line no-console
-        console.warn('Relative fetch failed, trying fallback URL:', fallback, firstErr);
         return tryFetch(fallback);
       })
       .then((htmlText) => {
@@ -107,11 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
               index,
             };
           })
-          .sort((a, b) => {
-            // sort by year desc, then by original order
-            if (b.year !== a.year) return b.year - a.year;
-            return a.index - b.index;
-          });
+          .sort((a, b) => b.year !== a.year ? b.year - a.year : a.index - b.index);
 
         const top = cards.slice(0, 3);
 
@@ -136,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch((err) => {
         recentContainer.innerHTML = '<p>Could not load projects.</p>';
-        // eslint-disable-next-line no-console
         console.error('Failed to load projects.html:', err);
       });
   }
