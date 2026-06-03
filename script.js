@@ -59,4 +59,68 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // ============================================
+  // DYNAMIC RECENT PROJECTS
+  // Loads project cards from `projects.html` and renders the most recent 3
+  // into `#recent-projects` on the index page.
+  // ============================================
+  const recentContainer = document.getElementById('recent-projects');
+  if (recentContainer) {
+    fetch('projects.html')
+      .then((res) => res.text())
+      .then((htmlText) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        const cards = Array.from(doc.querySelectorAll('.project-card'))
+          .map((card, index) => {
+            const titleEl = card.querySelector('h3');
+            const metaEl = card.querySelector('.project-meta');
+            const summaryEl = card.querySelector('.project-summary');
+            const id = card.dataset.project || '';
+            const metaText = metaEl ? metaEl.textContent.trim() : '';
+            const yearMatch = metaText.match(/(\d{4})/);
+            const year = yearMatch ? Number(yearMatch[1]) : 0;
+            return {
+              id,
+              title: titleEl ? titleEl.textContent.trim() : '',
+              meta: metaText,
+              summary: summaryEl ? summaryEl.textContent.trim() : '',
+              year,
+              index,
+            };
+          })
+          .sort((a, b) => {
+            // sort by year desc, then by original order
+            if (b.year !== a.year) return b.year - a.year;
+            return a.index - b.index;
+          });
+
+        const top = cards.slice(0, 3);
+
+        if (top.length === 0) {
+          recentContainer.innerHTML = '<p>No projects found — visit the <a href="projects.html">projects page</a>.</p>';
+          return;
+        }
+
+        recentContainer.innerHTML = top
+          .map((p) => {
+            const href = p.id ? `projects.html#${p.id}` : 'projects.html';
+            return `
+              <article class="mini-project">
+                <h3>${p.title}</h3>
+                <p class="project-meta">${p.meta}</p>
+                <p class="project-summary">${p.summary}</p>
+                <a class="project-link" href="${href}">Read more →</a>
+              </article>
+            `;
+          })
+          .join('');
+      })
+      .catch((err) => {
+        recentContainer.innerHTML = '<p>Could not load projects.</p>';
+        // eslint-disable-next-line no-console
+        console.error('Failed to load projects.html:', err);
+      });
+  }
 });
