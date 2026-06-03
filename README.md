@@ -1,31 +1,33 @@
-﻿# Simon Soriano — Personal Portfolio
+﻿# Simon Soriano — Portfolio
 
-This repository hosts a static portfolio website built to showcase Simon Christian Luigi Soriano's experience, recent work, and contact information.
+A simple static site that shows who I am, what I’m working on, and how to reach me.
 
-## Site structure
+## What’s here
 
-- `index.html` — homepage with a quick introduction, current role, and recent projects
-- `projects.html` — project showcase page with interactive cards and detailed modals
-- `contact.html` — contact page with a direct email link and external profile links
-- `style.css` — responsive styling and layout rules
-- `script.js` — interaction logic for modal dialogs, scroll reveals, and homepage project previews
+- `index.html` — homepage with a quick intro, current role, and the latest projects
+- `projects.html` — project showcase with cards and detail modals
+- `contact.html` — email link plus GitHub and LinkedIn
+- `style.css` — layout and styling
+- `script.js` — page interactions, modal behavior, and homepage project previews
 
-## Technologies used
+## Tech stack
 
-- **HTML5** — semantic structure for accessible, readable pages
-- **CSS** — modern layout, typography, and responsive design
-- **JavaScript** — UI behavior, smooth reveal animations, dialog modals, and dynamic project loading
+- HTML
+- CSS
+- JavaScript
 
-## What this website highlights
+No build tools. No frameworks. Just a clean static site ready for GitHub Pages or any simple host.
 
-- A concise landing experience with your current position and personal pitch
-- A dynamically generated "What I'm building" section on the homepage that surfaces the latest three projects from `projects.html`
-- A polished projects page with cards that open detail modals
-- A contact page with a working `mailto:` link and external links for GitHub and LinkedIn
+## Why it’s set up this way
 
-## Local development
+- keeps the homepage light and focused
+- pulls the latest 3 projects from `projects.html`
+- lets the project page stay as the source of truth for project details
+- keeps everything easy to update
 
-Run one of these commands from the repository root:
+## Run it locally
+
+From the repo root:
 
 ```powershell
 npm run start
@@ -37,11 +39,11 @@ or
 python -m http.server 8000
 ```
 
-Then open the served site in your browser:
+Then open whichever address matches your server:
 
 - `http://127.0.0.1:8080`
-- or `http://127.0.0.1:8000`
+- `http://127.0.0.1:8000`
 
 ## Notes
 
-This project is intentionally simple and static, making it easy to host on GitHub Pages or any basic web server. The code is organized for readability and quick updates.
+This README is meant to be short and straightforward — just enough to explain the site and how it works.
