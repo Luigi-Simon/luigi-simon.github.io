@@ -1,0 +1,12 @@
+{
+  "name": "personal-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal static site",
+  "scripts": {
+    "start": "npx http-server -c-1 . -p 8080",
+    "start:py": "python -m http.server 8000"
+  },
+  "author": "",
+  "license": "MIT"
+}
