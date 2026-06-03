@@ -1,57 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Simon Christian Luigi Soriano</title>
-  <meta name="description" content="Get in touch with Simon." />
+﻿# Simon Soriano — Personal Portfolio
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+This repository hosts a static portfolio website built to showcase Simon Christian Luigi Soriano's experience, recent work, and contact information.
 
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+## Site structure
 
-  <!-- SHARED HEADER — same as other pages, "Contact" is active here -->
-  <header class="site-header">
-    <a href="index.html" class="logo">SCLS</a>
-    <nav>
-      <a href="index.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html" class="active">Contact</a>
-    </nav>
-  </header>
+- `index.html` — homepage with a quick introduction, current role, and recent projects
+- `projects.html` — project showcase page with interactive cards and detailed modals
+- `contact.html` — contact page with a direct email link and external profile links
+- `style.css` — responsive styling and layout rules
+- `script.js` — interaction logic for modal dialogs, scroll reveals, and homepage project previews
 
-  <main>
+## Technologies used
 
-    <!-- PAGE HEADER -->
-    <section class="page-intro">
-      <h1>Get in touch</h1>
-      <p class="tagline">The best ways to reach me — pick whichever you like.</p>
-    </section>
+- **HTML5** — semantic structure for accessible, readable pages
+- **CSS** — modern layout, typography, and responsive design
+- **JavaScript** — UI behavior, smooth reveal animations, dialog modals, and dynamic project loading
 
-    <section class="section reveal">
-      <p>
-        I'm always happy to hear from people, whether it's about a project, a
-        question, or just to say hi. Email is the most reliable way to reach me.
-      </p>
+## What this website highlights
 
-      <ul class="contact-list">
-        <li><a href="mailto:your@email.com">your@email.com</a></li>
-        <li><a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn</a></li>
-      </ul>
-    </section>
+- A concise landing experience with your current position and personal pitch
+- A dynamically generated "What I'm building" section on the homepage that surfaces the latest three projects from `projects.html`
+- A polished projects page with cards that open detail modals
+- A contact page with a working `mailto:` link and external links for GitHub and LinkedIn
 
-  </main>
+## Local development
 
-  <footer class="site-footer">
-    <p>© 2026 Simon Christian Luigi Soriano. Built with care.</p>
-  </footer>
+Run one of these commands from the repository root:
 
-  <script src="script.js"></script>
+```powershell
+npm run start
+```
 
-</body>
-</html>
+or
+
+```powershell
+python -m http.server 8000
+```
+
+Then open the served site in your browser:
+
+- `http://127.0.0.1:8080`
+- or `http://127.0.0.1:8000`
+
+## Notes
+
+This project is intentionally simple and static, making it easy to host on GitHub Pages or any basic web server. The code is organized for readability and quick updates.
